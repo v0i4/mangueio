@@ -10,6 +10,7 @@ defmodule Mangueio.Scrapper do
         html
         |> Floki.find("section[data-ds-component='DS-AdCard']")
         |> Enum.map(&parse_ad_card/1)
+        |> handle_data
 
       _ ->
         {:error, :request_error}
@@ -53,5 +54,37 @@ defmodule Mangueio.Scrapper do
       price: price,
       location: location
     }
+  end
+
+  defp handle_data(items) do
+    items
+    |> Enum.map(fn item ->
+      price =
+        try do
+          %{
+            value:
+              item.price
+              |> String.split(" ")
+              |> List.last()
+              |> String.replace(".", "")
+              |> String.to_integer(),
+            currency: item.price |> String.split(" ") |> List.first()
+          }
+        rescue
+          _ ->
+            %{
+              value: 0,
+              currency: nil
+            }
+        end
+
+      %{
+        description: item.description,
+        image: item.image,
+        url: item.url,
+        price: price,
+        location: item.location
+      }
+    end)
   end
 end
