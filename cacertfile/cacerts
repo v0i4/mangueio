@@ -1,0 +1,1 @@
+ssl_opts: [verify: :verify_peer, cacertfile: 'cacertfile.crt']
