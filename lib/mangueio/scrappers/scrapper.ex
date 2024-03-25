@@ -1,19 +1,7 @@
-defmodule Mangueio.Olx.Scrapper do
-  @base_dir_scripts "/home/v0i4/dev/mangueio/scrappers/"
-
-  def search(query, filters \\ %{}) do
-    try do
-      query
-      |> web_scraping()
-      |> handle_data()
-      |> apply_filters(filters)
-    rescue
-      _ -> []
-    end
-  end
-
-  defp web_scraping(query) do
-    {html, status_code} = System.cmd("python3", ["#{@base_dir_scripts}olx.py", query])
+defmodule Mangueio.Scrapper do
+  def olx_request(query) do
+    {html, status_code} =
+      System.cmd("python3", ["/home/v0i4/dev/mangueio/scraper/scraper.py", query])
 
     case status_code do
       0 ->
@@ -22,6 +10,7 @@ defmodule Mangueio.Olx.Scrapper do
         html
         |> Floki.find("section[data-ds-component='DS-AdCard']")
         |> Enum.map(&parse_ad_card/1)
+        |> handle_data
 
       _ ->
         {:error, :request_error}
@@ -96,16 +85,6 @@ defmodule Mangueio.Olx.Scrapper do
         price: price,
         location: item.location
       }
-    end)
-  end
-
-  defp apply_filters(items, filters) do
-    min_price = filters |> Map.get(:min_price) || 0
-    max_price = filters |> Map.get(:max_price) || 9_999_999
-
-    items
-    |> Enum.filter(fn item ->
-      item.price.value >= min_price && item.price.value <= max_price
     end)
   end
 end
