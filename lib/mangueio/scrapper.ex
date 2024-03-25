@@ -1,5 +1,5 @@
 defmodule Mangueio.Olx.Scrapper do
-  @base_dir_scripts "/home/v0i4/dev/mangueio/scrappers/"
+  @base_dir_scripts "#{File.cwd!()}/scrappers/"
 
   def search(query, filters \\ %{}) do
     try do
