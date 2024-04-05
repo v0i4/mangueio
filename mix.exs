@@ -40,6 +40,7 @@ defmodule Mangueio.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -59,7 +60,10 @@ defmodule Mangueio.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.7"},
-      {:excoveralls, "~> 0.18", only: :test}
+      {:excoveralls, "~> 0.18", only: :test},
+      {:telegex, "~> 1.5.0"},
+      {:plug, "~> 1.15"},
+      {:remote_ip, "~> 1.1"}
     ]
   end
 

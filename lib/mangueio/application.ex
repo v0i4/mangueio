@@ -19,7 +19,7 @@ defmodule Mangueio.Application do
       # Start the Endpoint (http/https)
       MangueioWeb.Endpoint
       # Start a worker by calling: Mangueio.Worker.start_link(arg)
-      # {Mangueio.Worker, arg}
+      #      MangueioWeb.HookHandler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

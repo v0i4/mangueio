@@ -1,0 +1,29 @@
+<.header>
+  Interest <%= @interest.id %>
+  <:subtitle>This is a interest record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/interests/#{@interest}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit interest</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Keyword"><%= @interest.keyword %></:item>
+  <:item title="Location"><%= @interest.location %></:item>
+  <:item title="Min price"><%= @interest.min_price %></:item>
+  <:item title="Max price"><%= @interest.max_price %></:item>
+</.list>
+
+<.back navigate={~p"/interests"}>Back to interests</.back>
+
+<.modal :if={@live_action == :edit} id="interest-modal" show on_cancel={JS.patch(~p"/interests/#{@interest}")}>
+  <.live_component
+    module={MangueioWeb.InterestLive.FormComponent}
+    id={@interest.id}
+    title={@page_title}
+    action={@live_action}
+    interest={@interest}
+    patch={~p"/interests/#{@interest}"}
+  />
+</.modal>

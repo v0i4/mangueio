@@ -22,6 +22,13 @@ config :mangueio, MangueioWeb.Endpoint,
   certfile: "/priv/server.crt",
   keyfile: "/priv/server.key"
 
+config :telegex, token: System.get_env("TELEGRAM_BOT_TOKEN")
+config :telegex, caller_adapter: Finch
+config :telegex, caller_adapter: {Finch, [receive_timeout: 5 * 1000]}
+config :telegex, caller_adapter: {HTTPoison, [recv_timeout: 5 * 1000]}
+# config :telegex, hook_adapter: Bandit
+config :telegex, hook_adapter: Cowboy
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

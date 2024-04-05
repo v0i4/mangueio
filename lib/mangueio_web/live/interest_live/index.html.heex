@@ -1,0 +1,50 @@
+<.header>
+  Listing Interests
+  <:actions>
+    <.link patch={~p"/interests/new"}>
+      <.button>New Interest</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="interests"
+  rows={@streams.interests}
+  row_click={fn {_id, interest} -> JS.navigate(~p"/interests/#{interest}") end}
+>
+  <:col :let={{_id, interest}} label="Keyword"><%= interest.keyword %></:col>
+  <:col :let={{_id, interest}} label="Location"><%= interest.location %></:col>
+  <:col :let={{_id, interest}} label="Min price"><%= interest.min_price %></:col>
+  <:col :let={{_id, interest}} label="Max price"><%= interest.max_price %></:col>
+  <:col :let={{_id, interest}} label="User Id"><%= interest.user_id %></:col>
+  <:action :let={{_id, interest}}>
+    <div class="sr-only">
+      <.link navigate={~p"/interests/#{interest}"}>Show</.link>
+    </div>
+    <.link patch={~p"/interests/#{interest}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, interest}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: interest.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="interest-modal"
+  show
+  on_cancel={JS.patch(~p"/interests")}
+>
+  <.live_component
+    module={MangueioWeb.InterestLive.FormComponent}
+    id={@interest.id || :new}
+    title={@page_title}
+    action={@live_action}
+    interest={@interest}
+    patch={~p"/interests"}
+  />
+</.modal>
