@@ -7,6 +7,8 @@ defmodule Mangueio.Application do
 
   @impl true
   def start(_type, _args) do
+    :ets.new(:results, [:bag, :public, :named_table])
+
     children = [
       # Start the Telemetry supervisor
       MangueioWeb.Telemetry,

@@ -75,7 +75,8 @@ defmodule MangueioWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{MangueioWeb.UserAuth, :ensure_authenticated}] do
-      live "/", IndexLive, :index
+      #      live "/", IndexLive, :index
+      live "/", InterestLive.Index, :index
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/interests", InterestLive.Index, :index
@@ -83,6 +84,11 @@ defmodule MangueioWeb.Router do
       live "/interests/:id/edit", InterestLive.Index, :edit
       live "/interests/:id", InterestLive.Show, :show
       live "/interests/:id/show/edit", InterestLive.Show, :edit
+      live "/results", ResultLive.Index, :index
+      live "/results/new", ResultLive.Index, :new
+      live "/results/:id/edit", ResultLive.Index, :edit
+      live "/results/:id", ResultLive.Show, :show
+      live "/results/:id/show/edit", ResultLive.Show, :edit
     end
   end
 

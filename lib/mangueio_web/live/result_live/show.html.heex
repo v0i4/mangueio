@@ -1,0 +1,31 @@
+<.header>
+  Result <%= @result.id %>
+  <:subtitle>This is a result record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/results/#{@result}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit result</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Url"><%= @result.url %></:item>
+  <:item title="Image"><%= @result.image %></:item>
+  <:item title="Price"><%= @result.price %></:item>
+  <:item title="Currency"><%= @result.currency %></:item>
+  <:item title="Description"><%= @result.description %></:item>
+  <:item title="Location"><%= @result.location %></:item>
+</.list>
+
+<.back navigate={~p"/results"}>Back to results</.back>
+
+<.modal :if={@live_action == :edit} id="result-modal" show on_cancel={JS.patch(~p"/results/#{@result}")}>
+  <.live_component
+    module={MangueioWeb.ResultLive.FormComponent}
+    id={@result.id}
+    title={@page_title}
+    action={@live_action}
+    result={@result}
+    patch={~p"/results/#{@result}"}
+  />
+</.modal>

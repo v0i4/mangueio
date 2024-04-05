@@ -1,0 +1,46 @@
+<.header>
+  Listing Results
+  <:actions>
+    <.link patch={~p"/results/new"}>
+      <.button>New Result</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="results"
+  rows={@streams.results}
+  row_click={fn {_id, result} -> JS.navigate(~p"/results/#{result}") end}
+>
+  <:col :let={{_id, result}} label="Url"><%= result.url %></:col>
+  <:col :let={{_id, result}} label="Image"><%= result.image %></:col>
+  <:col :let={{_id, result}} label="Price"><%= result.price %></:col>
+  <:col :let={{_id, result}} label="Currency"><%= result.currency %></:col>
+  <:col :let={{_id, result}} label="Description"><%= result.description %></:col>
+  <:col :let={{_id, result}} label="Location"><%= result.location %></:col>
+  <:action :let={{_id, result}}>
+    <div class="sr-only">
+      <.link navigate={~p"/results/#{result}"}>Show</.link>
+    </div>
+    <.link patch={~p"/results/#{result}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, result}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: result.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="result-modal" show on_cancel={JS.patch(~p"/results")}>
+  <.live_component
+    module={MangueioWeb.ResultLive.FormComponent}
+    id={@result.id || :new}
+    title={@page_title}
+    action={@live_action}
+    result={@result}
+    patch={~p"/results"}
+  />
+</.modal>

@@ -23,8 +23,11 @@ defmodule MangueioWeb.InterestLive.FormComponent do
         <.input field={@form[:location]} type="text" label="Location" />
         <.input field={@form[:min_price]} type="number" label="Min price" />
         <.input field={@form[:max_price]} type="number" label="Max price" />
+        <.input field={@form[:user_id]} type="hidden" value={@user_id} />
+        <.input field={@form[:id]} type="hidden" value={@id} />
+        <.input field={@form[:status]} type="hidden" value={@status} />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Interest</.button>
+          <.button phx-disable-with="Garimpando...">Processar</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -71,9 +74,6 @@ defmodule MangueioWeb.InterestLive.FormComponent do
   end
 
   defp save_interest(socket, :new, interest_params) do
-    socket |> IO.inspect()
-    interest_params |> IO.inspect()
-
     case Interests.create_interest(interest_params) do
       {:ok, interest} ->
         notify_parent({:saved, interest})

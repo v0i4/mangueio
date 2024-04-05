@@ -1,8 +1,8 @@
 <.header>
-  Listing Interests
+  O que voce quer garimpar?
   <:actions>
     <.link patch={~p"/interests/new"}>
-      <.button>New Interest</.button>
+      <.button>Novo garimpo</.button>
     </.link>
   </:actions>
 </.header>
@@ -16,7 +16,7 @@
   <:col :let={{_id, interest}} label="Location"><%= interest.location %></:col>
   <:col :let={{_id, interest}} label="Min price"><%= interest.min_price %></:col>
   <:col :let={{_id, interest}} label="Max price"><%= interest.max_price %></:col>
-  <:col :let={{_id, interest}} label="User Id"><%= interest.user_id %></:col>
+  <:col :let={{_id, interest}} label="Status"><%= interest.status %></:col>
   <:action :let={{_id, interest}}>
     <div class="sr-only">
       <.link navigate={~p"/interests/#{interest}"}>Show</.link>
@@ -45,6 +45,8 @@
     title={@page_title}
     action={@live_action}
     interest={@interest}
+    user_id={@current_user.id}
+    status={@interest.status}
     patch={~p"/interests"}
   />
 </.modal>

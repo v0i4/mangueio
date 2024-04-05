@@ -20,4 +20,23 @@ defmodule Mangueio.InterestsFixtures do
 
     interest
   end
+
+  @doc """
+  Generate a result.
+  """
+  def result_fixture(attrs \\ %{}) do
+    {:ok, result} =
+      attrs
+      |> Enum.into(%{
+        currency: "some currency",
+        description: "some description",
+        image: "some image",
+        location: "some location",
+        price: 42,
+        url: "some url"
+      })
+      |> Mangueio.Interests.create_result()
+
+    result
+  end
 end

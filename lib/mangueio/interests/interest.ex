@@ -8,14 +8,15 @@ defmodule Mangueio.Interests.Interest do
     field :keyword, :string
     field :min_price, :integer
     field :max_price, :integer
-
+    field :status, :string, virtual: true, default: "processando"
+    has_many :results, Mangueio.Interests.Result
     timestamps()
   end
 
   @doc false
   def changeset(interest, attrs) do
     interest
-    |> cast(attrs, [:keyword, :location, :min_price, :max_price, :user_id])
+    |> cast(attrs, [:keyword, :location, :min_price, :max_price, :user_id, :status])
     |> validate_required([:keyword, :location, :min_price, :max_price, :user_id])
   end
 end

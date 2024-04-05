@@ -17,10 +17,10 @@ defmodule MangueioWeb.IndexLive do
     socket =
       socket
       |> assign(:current_tab, current_tab)
-      |> assign(:interests, interests)
       |> assign(:tab_enabled, @tab_enabled)
       |> assign(:tab_disabled, @tab_disabled)
       |> assign(:form, form)
+      |> stream(:interests, interests)
 
     {:ok, socket}
   end
@@ -29,8 +29,7 @@ defmodule MangueioWeb.IndexLive do
     {:noreply, assign(socket, :current_tab, params["tab"])}
   end
 
-  def handle_event("validate", params, socket) do
-    IO.inspect(params)
+  def handle_event("validate", _params, socket) do
     {:noreply, socket}
   end
 
@@ -56,6 +55,15 @@ defmodule MangueioWeb.IndexLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, socket |> assign(:form, to_form(changeset))}
     end
+  end
+
+  def handle_event("delete", %{"id" => id}, socket) do
+    interest =
+      Interests.get_interest!(id |> String.to_integer())
+
+    {:ok, _interest} = interest |> Interests.delete_interest()
+
+    {:noreply, stream_delete(socket, :interests, interest)}
   end
 
   def render(assigns) do
@@ -112,7 +120,11 @@ defmodule MangueioWeb.IndexLive do
       </.form>
     </div>
     <div class="mx-auto w-full py-4">
-      <div :for={interest <- @interests} id="interests" class="grid grid-cols-8 gap-3 py-4">
+      <div
+        :for={{_, interest} <- @streams.interests}
+        id="interests"
+        class="grid grid-cols-8 gap-3 py-4"
+      >
         <div><%= interest.keyword %></div>
         <div><%= interest.location %></div>
         <div><%= interest.min_price %></div>
