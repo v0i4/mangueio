@@ -4,7 +4,6 @@ defmodule MangueioWeb.InterestLive.Index do
   alias Mangueio.Interests
   alias Mangueio.Interests.Interest
   alias Mangueio.Interests
-  alias Mangueio.Scrapper.OLX
 
   @impl true
   def mount(_params, _session, socket) do
@@ -20,6 +19,7 @@ defmodule MangueioWeb.InterestLive.Index do
 
   @impl true
   def handle_params(params, _url, socket) do
+    "passando" |> IO.inspect(label: "passando")
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
@@ -63,12 +63,20 @@ defmodule MangueioWeb.InterestLive.Index do
         |> Map.put(:currency, item.price.currency)
         |> Map.put(:price, item.price.value)
 
-      #        |> Map.put(:interest_id, socket.assigns.interest.id)
-
       Interests.create_result(item)
     end)
 
-    {:noreply, socket |> put_flash(:info, "garimpado!")}
+    interest_id =
+      List.first(result).interest_id
+
+    result = Interests.list_results_by_interest(interest_id)
+
+    socket =
+      socket
+      |> stream(:results, result)
+      |> assign(:interest_id, interest_id)
+
+    {:noreply, stream(socket, :results, result) |> put_flash(:info, "garimpado!")}
   end
 
   @impl true
@@ -90,8 +98,6 @@ defmodule MangueioWeb.InterestLive.Index do
   end
 
   def process(params, interest_id) do
-    params |> IO.inspect()
-
     filters = %{
       min_price: params.min_price,
       max_price: params.max_price

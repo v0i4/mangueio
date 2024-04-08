@@ -6,7 +6,8 @@ defmodule MangueioWeb.ResultLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :results, Interests.list_results())}
+    {:ok,
+     stream(socket, :results, Interests.list_results_by_interest(socket.assigns.interest.id))}
   end
 
   @impl true

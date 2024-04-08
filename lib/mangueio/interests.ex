@@ -114,8 +114,8 @@ defmodule Mangueio.Interests do
       [%Result{}, ...]
 
   """
-  def list_results do
-    Repo.all(Result)
+  def list_results_by_interest(interest_id) do
+    Repo.all(from r in Result, where: r.interest_id == ^interest_id)
   end
 
   @doc """
