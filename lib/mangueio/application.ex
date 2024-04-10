@@ -8,12 +8,14 @@ defmodule Mangueio.Application do
   @impl true
   def start(_type, _args) do
     :ets.new(:results, [:bag, :public, :named_table])
+    Oban.Telemetry.attach_default_logger()
 
     children = [
       # Start the Telemetry supervisor
       MangueioWeb.Telemetry,
       # Start the Ecto repository
       Mangueio.Repo,
+      {Oban, Application.fetch_env!(:mangueio, Oban)},
       # Start the PubSub system
       {Phoenix.PubSub, name: Mangueio.PubSub},
       # Start Finch
@@ -21,8 +23,6 @@ defmodule Mangueio.Application do
       # Start the Endpoint (http/https)
       MangueioWeb.Endpoint,
       MangueioWeb.HookHandler
-      # Start a worker by calling: Mangueio.Worker.start_link(arg)
-      # {Plug.Cowboy, scheme: :http, plug: Mangueio.TelegramHookPlug, options: [port: 8080]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -1,6 +1,5 @@
 defmodule Mangueio.Senders.DataHelper do
   alias Mangueio.User.Alarms
-  alias Mangueio.Interests
   alias Telegex
   alias Mangueio.User.Alarm
   alias Mangueio.Interests.Result
@@ -8,7 +7,16 @@ defmodule Mangueio.Senders.DataHelper do
   alias Mangueio.Repo
   import Ecto.Query
 
-  def prepare_data_for_notification(user_id) do
+  def send_telegram_notifications() do
+    get_notificable_users()
+    |> Enum.map(fn user -> prepare_data_for_notification(user.id) end)
+  end
+
+  defp get_notificable_users() do
+    Repo.all(from a in Alarm, select: a, where: a.enabled == true)
+  end
+
+  defp prepare_data_for_notification(user_id) do
     alarm =
       user_id
       |> Alarms.get_alarm_by_user_id()
@@ -33,7 +41,7 @@ defmodule Mangueio.Senders.DataHelper do
     end)
   end
 
-  def get_content(user_id) do
+  defp get_content(user_id) do
     query =
       from a in Alarm,
         join: i in Interest,

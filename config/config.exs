@@ -29,6 +29,23 @@ config :telegex, caller_adapter: {Finch, [receive_timeout: 5 * 1000]}
 config :telegex, hook_adapter: Bandit
 # config :telegex, hook_adapter: Cowboy
 
+config :mangueio, Oban,
+  engine: Oban.Engines.Basic,
+  queues: [default: 10],
+  repo: Mangueio.Repo,
+  plugins: [
+    {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
+    {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)},
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"0 11 * * *", Mangueio.TelegramWorker, []}
+       # {"0 * * * *", MyApp.HourlyWorker, args: %{custom: "arg"}},
+       # {"0 0 * * *", MyApp.DailyWorker, max_attempts: 1},
+       # {"0 12 * * MON", MyApp.MondayWorker, queue: :scheduled, tags: ["mondays"]},
+       # {"@daily", MyApp.AnotherDailyWorker}
+     ]}
+  ]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

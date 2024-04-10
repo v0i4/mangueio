@@ -65,7 +65,8 @@ defmodule Mangueio.MixProject do
       {:bandit, "~> 1.4"},
       {:plug, "~> 1.15"},
       {:remote_ip, "~> 1.1"},
-      {:plug_cowboy, "~> 2.7"}
+      {:plug_cowboy, "~> 2.7"},
+      {:oban, "~> 2.17"}
     ]
   end
 
