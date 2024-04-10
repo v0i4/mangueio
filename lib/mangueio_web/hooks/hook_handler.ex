@@ -17,7 +17,7 @@ defmodule MangueioWeb.HookHandler do
 
     # if dev environment
 
-    if Mix.env() == :dev do
+    if Application.get_env(:mangueio, :env) == :dev do
       {:ok, true} =
         Telegex.set_webhook("https://eeba-2804-14d-bac2-870d-00-98b8.ngrok-free.app/api/telegram")
     else

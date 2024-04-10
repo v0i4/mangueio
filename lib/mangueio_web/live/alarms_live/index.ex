@@ -12,7 +12,7 @@ defmodule MangueioWeb.AlarmsLive.Index do
 
     user = socket.assigns.current_user
 
-    alarm = Alarms.get_alarm_by_user_id(user.id) |> IO.inspect()
+    alarm = Alarms.get_alarm_by_user_id(user.id)
     socket = assign(socket, :alarm, alarm)
 
     socket =

@@ -75,9 +75,27 @@ defmodule Mangueio.Accounts do
 
   """
   def register_user(attrs) do
-    %User{}
-    |> User.registration_changeset(attrs)
-    |> Repo.insert()
+    registration =
+      %User{}
+      |> User.registration_changeset(attrs)
+      |> Repo.insert()
+
+    case registration do
+      {:ok, user} ->
+        alarm_atrrs =
+          %{
+            user_id: user.id,
+            telegram_chat_id: -1,
+            daily_all: false,
+            enabled: false
+          }
+
+        Mangueio.User.Alarms.create_alarm(alarm_atrrs)
+        {:ok, user}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
   @doc """

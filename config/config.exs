@@ -42,8 +42,6 @@ config :mangueio, Oban,
        {"0 10 * * *", Mangueio.Oban.DailyScrapperWorker, []},
        {"0 9 * * THU", Mangueio.Oban.ClearCacheWorker, []},
        {"0 9 * * SUN", Mangueio.Oban.ClearCacheWorker, []}
-
-       # {"0 * * * *", MyApp.HourlyWorker, args: %{custom: "arg"}},
        # {"0 0 * * *", MyApp.DailyWorker, max_attempts: 1},
        # {"0 12 * * MON", MyApp.MondayWorker, queue: :scheduled, tags: ["mondays"]},
        # {"@daily", MyApp.AnotherDailyWorker}
