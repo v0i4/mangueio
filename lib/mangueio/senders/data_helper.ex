@@ -41,9 +41,14 @@ defmodule Mangueio.Senders.DataHelper do
     # filtrar pelo cache
 
     cached =
-      :ets.lookup(:notifications, user_id)
-      |> List.last()
-      |> elem(1)
+      try do
+        :ets.lookup(:notifications, user_id)
+        |> List.last()
+        |> elem(1)
+      rescue
+        _ ->
+          []
+      end
 
     daily_msg_list
     |> Enum.map(fn msg ->
