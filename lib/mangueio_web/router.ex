@@ -7,8 +7,8 @@ defmodule MangueioWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, html: {MangueioWeb.Layouts, :root}
     plug :protect_from_forgery
+    plug :put_root_layout, html: {MangueioWeb.Layouts, :root}
     plug :put_secure_browser_headers
     plug :fetch_current_user
   end
@@ -17,19 +17,13 @@ defmodule MangueioWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :no_csrf do
-    plug(:accepts, ["json"])
-  end
-
   scope "/", MangueioWeb do
     pipe_through :browser
-
-    #    get "/", PageController, :home
   end
 
-  scope "/", MangueioWeb do
-    pipe_through :no_csrf
-    post "/hook", HookHandler, :on_update
+  scope "/api", MangueioWeb do
+    pipe_through :api
+    post "/telegram", TelegramHookController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -89,6 +83,7 @@ defmodule MangueioWeb.Router do
       live "/results/:id/edit", ResultLive.Index, :edit
       live "/results/:id", ResultLive.Show, :show
       live "/results/:id/show/edit", ResultLive.Show, :edit
+      live "/settings/alarms", AlarmsLive.Index, :index
     end
   end
 

@@ -13,6 +13,14 @@ defmodule MangueioWeb.ResultLive.Show do
   end
 
   @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    result = Interests.get_result!(id)
+    {:ok, _} = Interests.delete_result(result)
+
+    {:noreply, stream_delete(socket, :results, result)}
+  end
+
+  @impl true
   def handle_params(%{"id" => id}, _, socket) do
     id = String.to_integer(id)
 

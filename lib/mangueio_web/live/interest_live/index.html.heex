@@ -1,6 +1,9 @@
 <.header>
-  O que voce quer garimpar?
+  <h1 class="text-2xl dark:text-white">O que voce quer garimpar?</h1>
   <:actions>
+    <.link patch={~p"/settings/alarms"}>
+      <.button>Configurar Alarmes</.button>
+    </.link>
     <.link patch={~p"/interests/new"}>
       <.button>Novo garimpo</.button>
     </.link>

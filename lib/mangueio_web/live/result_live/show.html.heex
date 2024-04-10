@@ -11,7 +11,14 @@
   <:col :let={{_id, result}} label="Valor"><%= result.price %></:col>
   <:col :let={{_id, result}} label="Foto"><img src={result.image} /></:col>
   <:col :let={{_id, result}} label="URL"><a href={result.url}><%= result.url %></a></:col>
-  <:action :let={{_id, result}}>
-    <a href={result.url} target="_blank">abrir em nova aba</a>
+  <:action :let={{id, result}}>
+    <a class="px-3" href={result.url} target="_blank">Visitar</a>
+    <.link
+      class="text-red-500"
+      phx-click={JS.push("delete", value: %{id: result.id}) |> hide("##{id}")}
+      data-confirm="Tem certeza?"
+    >
+      Deletar
+    </.link>
   </:action>
 </.table>

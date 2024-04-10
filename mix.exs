@@ -54,16 +54,18 @@ defmodule Mangueio.MixProject do
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
+      {:multipart, "~> 0.4.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.7"},
       {:excoveralls, "~> 0.18", only: :test},
       {:telegex, "~> 1.5.0"},
+      {:bandit, "~> 1.4"},
       {:plug, "~> 1.15"},
-      {:remote_ip, "~> 1.1"}
+      {:remote_ip, "~> 1.1"},
+      {:plug_cowboy, "~> 2.7"}
     ]
   end
 

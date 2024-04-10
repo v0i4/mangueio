@@ -17,6 +17,7 @@ module.exports = {
         brand: "#FD4F00",
       }
     },
+    darkMode: 'class'
   },
   plugins: [
     require("@tailwindcss/forms"),

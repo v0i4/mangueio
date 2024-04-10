@@ -65,7 +65,7 @@ defmodule MangueioWeb.InterestLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Interest updated successfully")
+         |> put_flash(:info, "Sua busca esta sendo processada!")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

@@ -9,6 +9,7 @@ defmodule Mangueio.Accounts.User do
     field :confirmed_at, :naive_datetime
 
     has_many :interests, Mangueio.Interests.Interest
+    has_many :alarms, Mangueio.User.Alarm
 
     timestamps()
   end
@@ -156,5 +157,11 @@ defmodule Mangueio.Accounts.User do
     else
       add_error(changeset, :current_password, "is not valid")
     end
+  end
+
+  import Ecto.Query
+
+  def get_user_by_email(email) do
+    Mangueio.Repo.all(from u in Mangueio.Accounts.User, where: u.email == ^email)
   end
 end

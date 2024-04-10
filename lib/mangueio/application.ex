@@ -19,9 +19,10 @@ defmodule Mangueio.Application do
       # Start Finch
       {Finch, name: Mangueio.Finch},
       # Start the Endpoint (http/https)
-      MangueioWeb.Endpoint
+      MangueioWeb.Endpoint,
+      MangueioWeb.HookHandler
       # Start a worker by calling: Mangueio.Worker.start_link(arg)
-      #      MangueioWeb.HookHandler
+      # {Plug.Cowboy, scheme: :http, plug: Mangueio.TelegramHookPlug, options: [port: 8080]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

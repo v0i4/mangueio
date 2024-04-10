@@ -1,0 +1,33 @@
+<.link
+  patch={~p"/interests"}
+  class="phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-white active:text-white/80"
+>
+  Voltar
+</.link>
+<div name="instructions" class="flex flex-col py-4">
+  <h1>Receba diariamente as notificacoes de anuncios via Telegram:</h1>
+  <h3 class="py-4">
+    Para habilitar os alarmes, envie: "<strong><%= @current_user.email %></strong>" para nosso BOT
+  </h3>
+  <strong>
+    <.link href="https://t.me/mangueio_bot">https://t.me/mangueio_bot</.link>
+  </strong>
+  <strong>
+    <p>@mangueio_bot</p>
+  </strong>
+  <div class="flex" name="status">
+    <p class="py-4">Status:</p>
+    <%= if @alarm.enabled do %>
+      <p class="text-green-500 px-2 py-4">Habilitado</p>
+      <.button
+        class="h-8 bg-red-500 px-2 justify-center text-align-center"
+        phx-click="disable-alarms"
+        phx-value-user_email={@current_user.email}
+      >
+        Desabilitar
+      </.button>
+    <% else %>
+      <p class="text-red-500 px-2 py-4">Desabilitado</p>
+    <% end %>
+  </div>
+</div>

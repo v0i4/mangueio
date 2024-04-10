@@ -134,6 +134,10 @@ defmodule Mangueio.Interests do
   """
   def get_result!(id), do: Repo.get!(Result, id)
 
+  def get_result_by_url(url) do
+    Repo.get_by(Result, url: url)
+  end
+
   @doc """
   Creates a result.
 

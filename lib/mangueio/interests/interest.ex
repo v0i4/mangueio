@@ -8,7 +8,7 @@ defmodule Mangueio.Interests.Interest do
     field :keyword, :string
     field :min_price, :integer
     field :max_price, :integer
-    field :status, :string, virtual: true, default: "processando"
+    field :status, :string, default: "Processamento.."
     has_many :results, Mangueio.Interests.Result
     timestamps()
   end
