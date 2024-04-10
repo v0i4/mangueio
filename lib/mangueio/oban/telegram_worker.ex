@@ -1,4 +1,4 @@
-defmodule Mangueio.TelegramWorker do
+defmodule Mangueio.Oban.TelegramWorker do
   use Oban.Worker
 
   alias Mangueio.Senders.DataHelper

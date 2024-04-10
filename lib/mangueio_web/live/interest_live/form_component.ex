@@ -20,7 +20,7 @@ defmodule MangueioWeb.InterestLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:keyword]} type="text" label="Keyword" />
-        <.input field={@form[:location]} type="text" label="Location" />
+        <.input field={@form[:location]} type="select" label="Location" options={["Grande Floripa"]} />
         <.input field={@form[:min_price]} type="number" label="Min price" />
         <.input field={@form[:max_price]} type="number" label="Max price" />
         <.input field={@form[:user_id]} type="hidden" value={@user_id} />

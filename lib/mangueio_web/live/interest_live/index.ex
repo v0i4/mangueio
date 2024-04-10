@@ -1,7 +1,6 @@
 defmodule MangueioWeb.InterestLive.Index do
   use MangueioWeb, :live_view
 
-  alias Mangueio.Interests
   alias Mangueio.Interests.Interest
   alias Mangueio.Interests
 
@@ -84,7 +83,8 @@ defmodule MangueioWeb.InterestLive.Index do
       interest =
         Interests.get_interest!(interest_id)
 
-      {_, updated_interest} = Interests.update_interest(interest, %{status: "Concluido"})
+      {_, updated_interest} =
+        Interests.update_interest(interest, %{status: "Concluido(#{Kernel.length(result)})"})
 
       send(self(), {:update_status, updated_interest})
 
@@ -116,6 +116,10 @@ defmodule MangueioWeb.InterestLive.Index do
     socket.assigns.streams |> IO.inspect()
 
     {:noreply, socket}
+  end
+
+  def handle_event("interest-refresh", %{"interests" => interests}, socket) do
+    {:noreply, socket |> assign(:interests, interests)}
   end
 
   def process(params, interest_id) do

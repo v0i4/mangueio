@@ -7,7 +7,7 @@ defmodule Mangueio.Application do
 
   @impl true
   def start(_type, _args) do
-    :ets.new(:results, [:bag, :public, :named_table])
+    :ets.new(:notifications, [:bag, :public, :named_table])
     Oban.Telemetry.attach_default_logger()
 
     children = [

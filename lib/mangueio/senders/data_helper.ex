@@ -26,9 +26,9 @@ defmodule Mangueio.Senders.DataHelper do
       alarm.user_id
       |> get_content()
 
-    results
-    |> Enum.map(fn {alarm, result} ->
-      msg =
+    daily_msg_list =
+      results
+      |> Enum.map(fn {_alarm, result} ->
         """
         #{result.description}
         #{result.url}
@@ -36,9 +36,26 @@ defmodule Mangueio.Senders.DataHelper do
         #{result.location}
 
         """
+      end)
 
-      Telegex.send_message(alarm.telegram_chat_id, msg)
+    # filtrar pelo cache
+
+    cached =
+      :ets.lookup(:notifications, user_id)
+      |> List.last()
+      |> elem(1)
+
+    daily_msg_list
+    |> Enum.map(fn msg ->
+      if !Enum.member?(cached, msg) do
+        IO.puts("NOVO ANUNCIO: #{msg}")
+        Telegex.send_message(alarm.telegram_chat_id, msg)
+      else
+        IO.puts("ANUNCIO JA ENVIADO")
+      end
     end)
+
+    :ets.insert(:notifications, {user_id, daily_msg_list})
   end
 
   defp get_content(user_id) do

@@ -13,7 +13,11 @@
 <.table
   id="interests"
   rows={@streams.interests}
-  row_click={fn {_id, interest} -> JS.navigate(~p"/results/#{interest.id}") end}
+  row_click={
+    fn {_id, interest} ->
+      if interest.status != "Processando..", do: JS.navigate(~p"/results/#{interest.id}")
+    end
+  }
 >
   <:col :let={{_id, interest}} label="Keyword"><%= interest.keyword %></:col>
   <:col :let={{_id, interest}} label="Location"><%= interest.location %></:col>
@@ -29,7 +33,7 @@
   <:action :let={{id, interest}}>
     <.link
       phx-click={JS.push("delete", value: %{id: interest.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
+      data-confirm="Tem certeza?"
     >
       Delete
     </.link>
