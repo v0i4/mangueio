@@ -209,4 +209,8 @@ defmodule Mangueio.Interests do
       item |> Map.put(:interest_id, interest_id)
     end)
   end
+
+  def list_results_by_user(user_id) do
+    Repo.all(from r in Result, where: r.user_id == ^user_id)
+  end
 end
