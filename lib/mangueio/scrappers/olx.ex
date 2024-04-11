@@ -1,5 +1,13 @@
 defmodule Mangueio.Scrapper.OLX do
-  @base_dir_scripts "#{File.cwd!()}/scrappers/"
+  #  @priv_scripts Application.app_dir(:mangueio, "priv/scrappers")
+
+  def resolve_priv_path() do
+    if Mix.env() in [:dev, :test] do
+      :code.priv_dir(:mangueio) |> Path.join("scrappers")
+    else
+      ~c"/app/lib/mangueio-0.1.0/priv/scrappers"
+    end
+  end
 
   def search(query, filters \\ %{}) do
     try do
@@ -8,12 +16,20 @@ defmodule Mangueio.Scrapper.OLX do
       |> handle_data()
       |> apply_filters(filters)
     rescue
-      _ -> []
+      _ ->
+        []
     end
   end
 
+  require Logger
+
   defp web_scraping(query) do
-    {html, status_code} = System.cmd("python3", ["#{@base_dir_scripts}olx.py", query])
+    # System.cmd("python3", [resolve_priv_path() |> Path.join("olx.py"), query])
+    {html, status_code} =
+      System.cmd("python3", ["/app/lib/mangueio-0.1.0/priv/scrappers/olx.py", query])
+
+    Logger.info("Response: #{status_code}")
+    Logger.info("html #{html}")
 
     case status_code do
       0 ->
@@ -23,8 +39,8 @@ defmodule Mangueio.Scrapper.OLX do
         |> Floki.find("section[data-ds-component='DS-AdCard']")
         |> Enum.map(&parse_ad_card/1)
 
-      _ ->
-        {:error, :request_error}
+      error ->
+        error
     end
   end
 

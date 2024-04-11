@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for mangueio on 2024-04-11T16:37:29-03:00
+# fly.toml app configuration file generated for mangueio on 2024-04-10T20:15:02-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -33,4 +33,4 @@ kill_signal = 'SIGTERM'
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
-  cpus = 2
+  cpus = 1

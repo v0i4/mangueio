@@ -22,7 +22,9 @@ config :mangueio, MangueioWeb.Endpoint,
   certfile: "/priv/server.crt",
   keyfile: "/priv/server.key"
 
-config :telegex, token: System.get_env("TELEGRAM_BOT_TOKEN")
+# config :telegex, token: System.get_env("TELEGRAM_BOT_TOKEN")
+
+config :telegex, token: "7163406877:AAHFkjqs1tMXpufEicitXdg8O_C3Xjj_dMA"
 config :telegex, caller_adapter: Finch
 config :telegex, caller_adapter: {Finch, [receive_timeout: 5 * 1000]}
 # config :telegex, caller_adapter: {HTTPoison, [recv_timeout: 5 * 1000]}
