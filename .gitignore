@@ -35,3 +35,5 @@ mangueio-*.tar
 npm-debug.log
 /assets/node_modules/
 
+
+run.sh
