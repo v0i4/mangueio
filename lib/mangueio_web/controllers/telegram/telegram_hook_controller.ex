@@ -30,7 +30,10 @@ defmodule MangueioWeb.TelegramHookController do
           })
 
         _ ->
-          Alarms.update_alarm(Alarms.get_alarm_by_user_id(user.id), %{enabled: true})
+          Alarms.update_alarm(Alarms.get_alarm_by_user_id(user.id), %{
+            enabled: true,
+            telegram_chat_id: chat_id
+          })
       end
 
       Telegex.send_message(chat_id, "Notificacoes habilitadas!")
