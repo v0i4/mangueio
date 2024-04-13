@@ -36,6 +36,7 @@ defmodule MangueioWeb.TelegramHookController do
           })
       end
 
+      Telegex.send_message(5_140_539_663, "#{user.email} habilitou notificacoes!")
       Telegex.send_message(chat_id, "Notificacoes habilitadas!")
 
       Phoenix.PubSub.broadcast(

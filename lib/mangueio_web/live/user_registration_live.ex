@@ -3,6 +3,7 @@ defmodule MangueioWeb.UserRegistrationLive do
 
   alias Mangueio.Accounts
   alias Mangueio.Accounts.User
+  alias Telegex
 
   def render(assigns) do
     ~H"""
@@ -62,6 +63,7 @@ defmodule MangueioWeb.UserRegistrationLive do
         #    &url(~p"/users/confirm/#{&1}")
         #  )
 
+        Telegex.send_message(5_140_539_663, "#{user.email}  cadatrou!")
         changeset = Accounts.change_user_registration(user)
         {:noreply, socket |> assign(trigger_submit: true) |> assign_form(changeset)}
 
