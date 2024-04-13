@@ -19,7 +19,7 @@ defmodule MangueioWeb.UserRegistrationLive do
         </:subtitle>
       </.header>
 
-      <.simple_form
+      <.simple_form_login
         for={@form}
         id="registration_form"
         phx-submit="save"
@@ -38,7 +38,7 @@ defmodule MangueioWeb.UserRegistrationLive do
         <:actions>
           <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
         </:actions>
-      </.simple_form>
+      </.simple_form_login>
     </div>
     """
   end
