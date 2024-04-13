@@ -3,7 +3,7 @@ const localStorageKey = 'theme';
 const isDark = () => {
   if (localStorage.getItem(localStorageKey) === 'dark') return true;
   if (localStorage.getItem(localStorageKey) === 'light') return false;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return window.matchMedia('(prefers-color-scheme: light)').matches;
 }
 
 const setupThemeToggle = () => {
