@@ -32,6 +32,7 @@ defmodule Mangueio.Senders.DataHelper do
         """
         #{result.description}
         #{result.price}
+        #{result.currency} #{result.price}
         #{result.url}
         #{result.image}
         #{result.location}
