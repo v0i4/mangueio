@@ -31,6 +31,7 @@ defmodule Mangueio.Senders.DataHelper do
       |> Enum.map(fn {_alarm, result} ->
         """
         #{result.description}
+        #{result.price}
         #{result.url}
         #{result.image}
         #{result.location}
