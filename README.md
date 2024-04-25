@@ -3,9 +3,16 @@
 
 WEB SCRAPPER
 
--TODO\ 
--add FB MARKEPPLACE ads\
--improve locale\
+
+-TODO:
+
+
+-add FB MARKEPPLACE ads
+
+
+-improve locale
+
+...
 
 To start your Phoenix server:
 
