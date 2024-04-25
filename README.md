@@ -1,5 +1,12 @@
 # Mangueio
 
+
+WEB SCRAPPER
+
+-TODO 
+-add FB MARKEPPLACE ads
+-improve locale
+
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
